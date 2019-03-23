@@ -1,10 +1,13 @@
 local http = require 'http'
 
 local luis = {
-  app_id = 'FIXME',
-  region = 'FIXME',
-  key = 'FIXME',
   url_template = "https://%s.api.cognitive.microsoft.com/luis/v2.0/apps/%s",
+}
+
+local required_keys = {
+  app_id = true,
+  region = true,
+  key = true,
 }
 
 function luis:format_url()
@@ -34,6 +37,11 @@ function luis:new (o)
   setmetatable(o, self)
   self.__index = self
   if not o.url then
+    if not o.format_url then
+      for k in pairs(required_keys) do
+        assert(o[k], string.format("missing required key: %s", k))
+      end
+    end
     o.url = o:format_url()
   end
   return o

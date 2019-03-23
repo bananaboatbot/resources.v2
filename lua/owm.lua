@@ -1,7 +1,6 @@
 local http = require 'http'
 
 local owm = {
-  key = 'FIXME',
   units = 'metric',
   url = 'https://api.openweathermap.org/data/2.5/weather',
 }
@@ -27,6 +26,7 @@ end
 
 function owm:new (o)
   o = o or {}
+  assert(o.key, "missing required key: key")
   setmetatable(o, self)
   self.__index = self
   return o
