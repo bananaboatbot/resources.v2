@@ -18,7 +18,7 @@ function owm:by_city(location)
   if err then
     return nil, err
   end
-  if res.status_code ~= '200' then
+  if res.status_code ~= 200 then
     return res.json, res.json.message or string.format("HTTP status %s", res.status_code)
   end
   return res.json
